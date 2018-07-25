@@ -12,4 +12,39 @@
         android:layout_height="wrap_content"
         android:text="@string/force_offline"/>
 
+    <Button
+        android:id="@+id/create_database"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/create_database" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/myService"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_purple"
+            android:drawableBottom="@android:color/darker_gray"
+            android:drawableTop="@android:drawable/checkbox_on_background"
+            android:text="@string/myService" />
+
+        <Button
+            android:id="@+id/stopService"
+            style="@android:style/Widget.DeviceDefault.Light.Button.Borderless.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light"
+            android:drawableTop="@android:drawable/btn_dialog"
+            android:text="@string/stopService" />
+    </LinearLayout>
+
 </LinearLayout>

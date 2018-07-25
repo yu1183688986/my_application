@@ -1,8 +1,15 @@
 package com.study.yuyong.activitytest;
-
+/**
+ * @date on 2018/7/11
+ * @author yuyong
+ * @Email yu1183688986@163.com
+ * @describe
+ */
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +27,12 @@ public class FirstActivity extends BaseActivity {
     private EditText accountEdit;//定义账户名编辑框
 
     private EditText passwoordEdit;//定义密码编辑框
+
+    private SharedPreferences preferences;//用SharedPreferences来保存用户名和密码
+
+    private SharedPreferences.Editor editor;
+
+    private CheckBox rememberPass;//定义复选框来确定是否需要记住密码
 
     private Button login;//定义登录按钮
     @Override
@@ -47,9 +61,9 @@ public class FirstActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 //作用：用Intent打开浏览器
-              //  Intent intent = new Intent(Intent.ACTION_VIEW);
+                //Intent intent = new Intent(Intent.ACTION_VIEW);
                 Intent intent = new Intent(FirstActivity.this,ThirdActivity.class);
-               // intent.setData(Uri.parse("http://www.baidu.com"));
+                //intent.setData(Uri.parse("http://www.baidu.com"));
                //作用：用Intent调用系统拨号界面
                /* Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("tel:10086"));*/
@@ -72,6 +86,19 @@ public class FirstActivity extends BaseActivity {
         accountEdit = (EditText) findViewById(R.id.account);
         passwoordEdit = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
+        //得到SharedPreferences对象
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        rememberPass = (CheckBox) findViewById(R.id.remember_pass);//得到复选框对象
+        //定义复选框的选中状态，开始默认不选中
+        final boolean isRemember = preferences.getBoolean("remember_password",false);
+        //如果被选中则将密码和账号设置到文本框中
+        if (isRemember){
+            String account = preferences.getString("account","");
+            String password = preferences.getString("password","");
+            accountEdit.setText(account);
+            passwoordEdit.setText(password);
+            rememberPass.setChecked(true);
+        }
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +107,16 @@ public class FirstActivity extends BaseActivity {
                 String password = passwoordEdit.getText().toString();
                 //判断如果账户名是admin密码是admin就认为登录成功
                 if ("admin".equals(account) && ("admin".equals(password))){
+                    //检查复选框是否被选中，若被选中则记录账号和密码
+                    editor = preferences.edit();
+                    if (rememberPass.isChecked()){
+                        editor.putString("account",account);
+                        editor.putString("password",password);
+                        editor.putBoolean("remember_password",true);
+                    }else {
+                        editor.clear();
+                    }
+                    editor.apply();
                     //登录成功则界面跳转至FirstActivity
                     Intent intent = new Intent(FirstActivity.this,LoginActivity.class);
                     startActivity(intent);

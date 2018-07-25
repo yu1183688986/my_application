@@ -15,4 +15,12 @@
     <string name="password">Password：</string>
     <string name="login">Login</string>
     <string name="force_offline">Send force offline broadcast</string>
+    <string name="create_database">创建数据库</string>
+    <string name="open_URL">打开网址</string>
+    <string name="sendToServel">发送请求</string>
+    <string name="dataShow">服务器返回的数据</string>
+    <string name="URL">请输入想要访问的网址</string>
+    <string name="analysis">解析XML</string>
+    <string name="myService">开启我的服务</string>
+    <string name="stopService">关闭服务</string>
 </resources>
